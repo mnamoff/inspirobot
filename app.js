@@ -8,6 +8,7 @@ const {
   createUserTokenMiddleware
 } = require("./middleware");
 
+/* App */
 const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
   token: process.env.SLACK_BOT_TOKEN,
@@ -16,11 +17,14 @@ const app = new App({
   },
 });
 
+/* Global middleware */
 app.use(createClientsMiddleware());
 app.use(createUserTokenMiddleware());
 
+/* Commands */
 app.command("/inspire", createPreviewMiddleware());
 
+/* Actions */
 app.action("cancel_inspire", createCancelMiddleware());
 app.action("replace_inspire", createPreviewMiddleware());
 app.action("accept_inspire", createAcceptMiddleware());
